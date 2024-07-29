@@ -1,31 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://crq7q51oo3juv"]
+[gd_scene load_steps=6 format=3 uid="uid://crq7q51oo3juv"]
 
 [ext_resource type="Texture2D" uid="uid://c3b0nfkwaak4v" path="res://icon.svg" id="1_1hjii"]
 [ext_resource type="Script" path="res://scripts/Gear.gd" id="2_mygva"]
-[ext_resource type="Script" path="res://scripts/Source.gd" id="2_vssx1"]
-[ext_resource type="Script" path="res://scenes/Rod.gd" id="4_7ursm"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_x4gcn"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_1hjii")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="Script" path="res://scripts/Rod.gd" id="4_l6lae"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mjric"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_1hjii")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pd2hk"]
 animations = [{
@@ -40,18 +19,13 @@ animations = [{
 
 [node name="Blocks" type="Node"]
 
-[node name="SourceGear" type="AnimatedSprite2D" parent="."]
-position = Vector2(64, 64)
-sprite_frames = SubResource("SpriteFrames_x4gcn")
-script = ExtResource("2_vssx1")
-
 [node name="Gear" type="AnimatedSprite2D" parent="."]
 position = Vector2(64, 64)
 sprite_frames = SubResource("SpriteFrames_mjric")
 script = ExtResource("2_mygva")
 
-[node name="GearXCam" type="AnimatedSprite2D" parent="."]
+[node name="Rod" type="AnimatedSprite2D" parent="."]
 position = Vector2(63, 63)
 scale = Vector2(1, 0.05)
 sprite_frames = SubResource("SpriteFrames_pd2hk")
-script = ExtResource("4_7ursm")
+script = ExtResource("4_l6lae")

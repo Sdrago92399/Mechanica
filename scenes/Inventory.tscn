@@ -1,19 +1,100 @@
-[gd_scene load_steps=2 format=3 uid="uid://buwyojch2b26m"]
+[gd_scene load_steps=2 format=3 uid="uid://db2ijt82r5gxi"]
 
-[ext_resource type="Script" path="res://scripts/GUI.gd" id="1_cd8x2"]
+[sub_resource type="GDScript" id="GDScript_0ndoq"]
+script/source = "extends CanvasLayer
 
-[node name="Node2D" type="Node2D"]
+signal block_selected(block_type: String, parameters: Dictionary)
+signal connect_mode_started()
+signal interface_mode_started()
 
-[node name="GUI" type="CanvasLayer" parent="."]
-script = ExtResource("1_cd8x2")
+@onready var block_type = \"\"
+@onready var parameters = {
+	\"linearVelocity\": 0,
+	\"momentum\": 0,
+	\"inertia\": 100,
+	\"length\": 128
+}
+@onready var connect_mode = false
+@onready var interface_mode = false
 
-[node name="inv" type="GridContainer" parent="GUI"]
-offset_left = 248.0
-offset_top = 8.0
-offset_right = 560.0
-offset_bottom = 312.0
+func _ready():
+	$VBoxContainer/ButtonSource.connect(\"pressed\", Callable(self, \"_on_button_source_pressed\"))
+	$VBoxContainer/ButtonGear.connect(\"pressed\", Callable(self, \"_on_button_gear_pressed\"))
+	$VBoxContainer/ButtonRod.connect(\"pressed\", Callable(self, \"_on_button_rod_pressed\"))
+	$VBoxContainer/ButtonConnect.connect(\"pressed\", Callable(self, \"_on_connect_pressed\"))
+	$VBoxContainer/ButtonInterface.connect(\"pressed\", Callable(self, \"_on_interface_pressed\"))
+	$VBoxContainer/Size.connect(\"value_changed\", Callable(self, \"_on_parameter_changed\").bind(\"Size\"))
 
-[node name="Panel" type="Panel" parent="GUI"]
-offset_right = 576.0
-offset_bottom = 320.0
-metadata/_edit_lock_ = true
+func _on_button_source_pressed():
+	block_type = \"Source\"
+	connect_mode = false
+	interface_mode = false
+	emit_signal(\"block_selected\", block_type, parameters)
+
+func _on_button_gear_pressed():
+	block_type = \"Gear\"
+	connect_mode = false
+	interface_mode = false
+	emit_signal(\"block_selected\", block_type, parameters)
+
+func _on_button_rod_pressed():
+	block_type = \"Rod\"
+	connect_mode = false
+	interface_mode = false
+	emit_signal(\"block_selected\", block_type, parameters)
+
+func _on_connect_pressed():
+	connect_mode = true
+	interface_mode = false
+	block_type = \"Rod\"
+	emit_signal(\"connect_mode_started\", block_type, parameters)
+
+func _on_interface_pressed():
+	connect_mode = false
+	interface_mode = true
+	block_type = \"\"
+	emit_signal(\"interface_mode_started\")
+
+func _on_parameter_changed(value, parameter_name):
+	parameters[parameter_name] = value
+"
+
+[node name="Inventory" type="CanvasLayer"]
+scale = Vector2(2.56349, 3.2)
+transform = Transform2D(2.56349, 0, 0, 3.2, 0, 0)
+script = SubResource("GDScript_0ndoq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.599797, 0.488672)
+
+[node name="ButtonGear" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Add Gear"
+
+[node name="ButtonRod" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Add Rod"
+
+[node name="ButtonSource" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Add Source"
+
+[node name="ButtonConnect" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Connect"
+
+[node name="ButtonInterface" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Interface with AI"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelLinearVelocity" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Size"
+
+[node name="Size" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2

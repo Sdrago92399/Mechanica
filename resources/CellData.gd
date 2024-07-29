@@ -12,7 +12,13 @@ var floorData: FloorData :
 	get:
 		return floorData
 		
-var occupier: Dictionary = {}
+var occupier: Dictionary = {
+	0: null,
+	1: null,
+	2: null,
+	3: null,
+	4: null
+}
 	#set(value):
 		#occupier = value
 		#print("yoo")

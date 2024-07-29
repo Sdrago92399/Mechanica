@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cypuk0r5ctdiy"]
+[gd_scene load_steps=5 format=3 uid="uid://cypuk0r5ctdiy"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_f437k"]
 [ext_resource type="PackedScene" uid="uid://djvpyucoekdus" path="res://scenes/Grid.tscn" id="2_kycs1"]
+[ext_resource type="PackedScene" uid="uid://db2ijt82r5gxi" path="res://scenes/Inventory.tscn" id="3_0aqoi"]
 
 [sub_resource type="GDScript" id="GDScript_c05x4"]
 script/source = "extends Camera2D
@@ -43,3 +44,9 @@ format = 2
 
 [node name="Camera" type="Camera2D" parent="."]
 script = SubResource("GDScript_c05x4")
+
+[node name="Inventory" parent="." instance=ExtResource("3_0aqoi")]
+
+[node name="OccupierLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
